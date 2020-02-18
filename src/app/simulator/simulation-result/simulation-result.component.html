@@ -1,0 +1,20 @@
+<div>
+    simulation response: {{response | json}}
+    <ng-container *ngIf="response.scholarshipOK; then scholarshipOK; else scholarshipKO"></ng-container>
+
+    <ng-template #scholarshipOK>
+        <div>
+            <p>{{response.message}}</p>
+            <button (click)="gotoScholarshipInquiry()">
+                Faire une demande de bourse
+            </button>
+        </div>
+    </ng-template>
+
+    <ng-template #scholarshipKO>
+        <div>
+            <p>{{response.message}}</p>
+            <button (click)="gotoNoScholarshipCertificate()">Editer un certificat de non droit</button>
+        </div>
+    </ng-template>
+</div>

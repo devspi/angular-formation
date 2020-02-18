@@ -1,0 +1,29 @@
+<div>
+    <h2>Demande de bourse scolaire</h2>
+    <button routerLink="/">Retour à l'accueil</button>
+
+    <form [formGroup]="inquiryForm" (ngSubmit)="onSubmit()">
+        {{inquiryForm.value | json}}
+        <div formGroupName="identity">
+            <div class="row">
+                <div class="col-sm">
+                    <h5>Demandeur</h5>
+                </div>
+                <div class="col-sm">
+                    <h5>Conjoint</h5>
+                </div>
+            </div>
+
+            <app-scholarship-inquiry-general-info [formGroupLeft]="applicant.get('generalInfo')"
+                                                  [formGroupRight]="conjoint.get('generalInfo')">
+            </app-scholarship-inquiry-general-info>
+
+            <app-family-situation [formGroupLeft]="applicant.get('familySituation')"
+                                  [formGroupRight]="conjoint.get('familySituation')">
+            </app-family-situation>
+
+
+        </div>
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+    </form>
+</div>

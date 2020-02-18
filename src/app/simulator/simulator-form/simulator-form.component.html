@@ -1,0 +1,65 @@
+<div>
+    <h2>Simulateur</h2>
+    <button routerLink="/">Retour à l'accueil</button>
+
+    <form [formGroup]="simulatorForm" (ngSubmit)="onSubmit()">
+        {{simulatorForm.value | json}}
+        <div class="form-group">
+            <label>Commune de residence</label>
+            <input type="text" class="form-control" formControlName="city"
+                   [class.is-invalid]="city.invalid && city.touched">
+            <div *ngIf="city.invalid && city.touched">
+                <small *ngIf="city.errors?.required" class="text-danger">Veuillez renseigner votre commune</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Revenus</label>
+            <input type="text" class="form-control" formControlName="income"
+                   [class.is-invalid]="income.invalid && income.touched">
+            <div *ngIf="income.invalid && income.touched">
+                <small *ngIf="income.errors?.required" class="text-danger">Veuillez renseigner vos revenus</small>
+            </div>
+            <small class="form-text text-muted">Soit un revenu mensuel moyen sur les 12 derniers mois,
+                soit le montant des revenus sur les 12 derniers mois</small>
+        </div>
+        <div class="form-group">
+            <label>Nombre de personnes handicapées au sein du foyer</label>
+            <input type="number" class="form-control" formControlName="nbrHandi">
+            <small class="form-text text-muted">Handicapé > 50%</small>
+        </div>
+        <div class="form-group">
+            <label>Nombre d'enfants</label>
+            <select class="form-control" formControlName="nbrChildren"
+                    [class.is-invalid]="nbrChildren.invalid && nbrChildren.touched">
+                <option value="{{null}}">Nombre d'enfants</option>
+                <option *ngFor="let number of numbers">{{number}}</option>
+            </select>
+            <div *ngIf="nbrChildren.invalid && nbrChildren.touched">
+                <small *ngIf="nbrChildren.errors?.required" class="text-danger">
+                    Veuillez indiquer le nombre d'enfants
+                </small>
+            </div>
+        </div>
+        <div *ngFor="let item of children.controls; let i = index" formArrayName="children">
+            <h4>Enfant {{i + 1}}</h4>
+            <div [formGroupName]="i" class="row">
+                <div class="col form-group">
+                    <label>Date de naissance</label>
+                    <input type="date" class="form-control" formControlName="dateOfBirth"
+                           [class.is-invalid]="item.get('dateOfBirth').invalid && item.get('dateOfBirth').touched">
+                    <div *ngIf="item.get('dateOfBirth').invalid && item.get('dateOfBirth').touched">
+                        <small *ngIf="item.get('dateOfBirth').errors?.required" class="text-danger">
+                            Veuillez indiquer la date de naissance
+                        </small>
+                    </div>
+                </div>
+                <div class="col form-group">
+                    <app-select-scholar-level [formGroup]="item"></app-select-scholar-level>
+                </div>
+            </div>
+        </div>
+
+        <button [disabled]='!simulatorForm.valid' class="btn btn-primary" type="submit">Enregistrer</button>
+    </form>
+
+</div>
