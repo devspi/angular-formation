@@ -5,14 +5,13 @@ import localeFr from '@angular/common/locales/fr';
 
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {ReferentialModule} from './referential/referential.module';
-import {SelectMaritalStatusComponent} from './scholarship-inquiry/scholarship-inquiry-form/components/select-marital-status/select-marital-status.component';
-import {GeneralInfoComponent} from './scholarship-inquiry/scholarship-inquiry-form/general-info/general-info.component';
-import {InquiryFormComponent} from './scholarship-inquiry/scholarship-inquiry-form/components/inquiry-form-component/inquiry-form.component';
-import {InlineInputTextComponent} from './scholarship-inquiry/scholarship-inquiry-form/components/inline-input-text/inline-input-text.component';
-import { FamilySituationComponent } from './scholarship-inquiry/scholarship-inquiry-form/family-situation/family-situation.component';
+import {SimulatorModule} from './simulator/simulator.module';
+import {ScholarshipInquiryModule} from './scholarship-inquiry/scholarship-inquiry.module';
+import {NavBarComponent} from './nav-bar/nav-bar.component';
+import {LoginComponent} from './login/login.component';
+import {SharedComponentsModule} from './_components/shared-components.module';
+import {UserAccountModule} from '@app/user-account/user-account.module';
+import {CoreModule} from '@app/_core/core.module';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -20,20 +19,22 @@ registerLocaleData(localeFr, 'fr-FR');
     declarations: [
         AppComponent,
         routingComponents,
-        SelectMaritalStatusComponent,
-        GeneralInfoComponent,
-        InquiryFormComponent,
-        InlineInputTextComponent,
-        FamilySituationComponent,
+        NavBarComponent,
+        LoginComponent,
     ],
     imports: [
+        CoreModule,
         BrowserModule,
         AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        ReferentialModule,
+        SimulatorModule,
+        ScholarshipInquiryModule,
+        UserAccountModule,
+        SharedComponentsModule,
     ],
     providers: [],
+    exports: [
+        NavBarComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

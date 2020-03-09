@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1 class="display-4">{{user.firstName}} {{user.familyName}} </h1>
+    </div>
+
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Coordonnées postales</a>
+            <ng-template ngbNavContent>
+                <app-alert></app-alert>
+                <app-address-form [detailObservable]="userDetailObservable"
+                                  (saveEvent)="saveAddressInfo($event)"></app-address-form>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>Informations de contact</a>
+            <ng-template ngbNavContent>
+                <app-alert></app-alert>
+                <app-contact-form [detailObservable]="userDetailObservable"
+                                  (saveEvent)="saveContactInfo($event)"></app-contact-form>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink>Informations bancaires</a>
+            <ng-template ngbNavContent>
+                <app-alert></app-alert>
+                <app-bank-form [detailObservable]="userDetailObservable"
+                               (saveEvent)="saveBankInfo($event)"></app-bank-form>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

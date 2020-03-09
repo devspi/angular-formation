@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SimulationResponse} from '../../model/simulation/simulation-response';
+import {SimulationResponse} from '../../_models/simulation/simulation-response';
 
 @Component({
     selector: 'app-simulation-result',
@@ -23,6 +23,6 @@ export class SimulationResultComponent implements OnInit {
     }
 
     gotoNoScholarshipCertificate() {
-        this.router.navigateByUrl('/noscholarship-certificate', {state: {response: this.response}});
+        this.router.navigateByUrl('/scholarship/noscholarship-certificate', {state: {response: this.response}});
     }
 }

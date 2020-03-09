@@ -1,6 +1,32 @@
-<div>
-    <button routerLink="/simulator" routerLinkActive="active" class="btn btn-primary">
-        Faire une demande de bourse scolaire
-    </button>
-</div>
+<div class="container-fluid">
+    <h1>Bienvenue PAM BSC !</h1>
 
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Simulateur</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Etes-vous éligible ?</h6>
+                    <p class="card-text">Découvrez en quelques minutes si vous êtes éligible ou non a une bourse
+                        scolaire.
+                        Vous
+                        pourrez aussi éditer une attestation de non bourse</p>
+                    <a routerLink="/simulator" routerLinkActive="active" class="card-link">Acceder au simulateur</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div *ngIf="user" class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Demande de bourse</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">100% en ligne</h6>
+                    <p class="card-text">Remplisser le formulaire, joignez vos documents justificatifs et faire votre
+                        demande de
+                        bourse 100% en ligne</p>
+                    <a routerLink="/scholarship/inquiry" routerLinkActive="active" class="card-link">C'est parti !</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

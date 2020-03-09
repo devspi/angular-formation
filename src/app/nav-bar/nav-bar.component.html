@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">PAM-BSC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/simulator">Simulateur</a>
+            </li>
+        </ul>
+        <div class="custom-control-inline">
+            <a class="nav-link" href="#">Contact</a>
+            <button *ngIf="!currentUser" class="btn btn-primary" routerLink="/login">S'authentifier</button>
+            <div *ngIf="currentUser" ngbDropdown class="d-inline-block" display="dynamic">
+                <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    {{currentUser.firstName}} {{currentUser.familyName}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem routerLink="/user/profile">Mon profil</button>
+                    <button ngbDropdownItem routerLink="/user/home">Mon foyer</button>
+                    <button ngbDropdownItem routerLink="/user/scholarship">Mes dossier de bourses</button>
+                    <button ngbDropdownItem (click)="logout()">Se deconnecter</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</nav>

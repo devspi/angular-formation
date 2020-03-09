@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <h4>Membre de la famille</h4>
+    <button class="btn btn-primary">Signaler un changement</button>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" *ngFor="let col of columns">{{ col }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let child of childrenInfo; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td *ngFor="let col of columns">{{ child[col] }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

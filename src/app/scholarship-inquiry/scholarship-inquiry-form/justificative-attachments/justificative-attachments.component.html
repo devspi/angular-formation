@@ -1,0 +1,24 @@
+<h5>Joindre les documents justificatifs</h5>
+
+<div>
+    <p>Liste des documents à fournir</p>
+    <p *ngFor="let justi of neededDocuments | keyvalue">
+        <fa-icon *ngIf="isDocSelected(justi.key); else iconNotOk" [icon]="okIcon"></fa-icon>
+        <ng-template #iconNotOk>
+            <fa-icon [icon]="missingIcon"></fa-icon>
+        </ng-template>
+        {{justi.value.label}}
+    </p>
+</div>
+
+<app-uploader [uploadFileTemplate]="uploadFileTemplate"
+              (dropped)="onDrop($event)"
+              (fileRemoved)="onFileRemove($event)"></app-uploader>
+
+<ng-template #uploadFileTemplate let-file="file" let-index="index">
+    <label>{{file.name}}</label>
+    <select (change)="onDocumentTypeSelected($event, index)">
+        <option value="{{null}}">Type de document</option>
+        <option *ngFor="let justi of getRemainingDocuments(index)" value="{{justi}}">{{getLabel(justi)}}</option>
+    </select>
+</ng-template>

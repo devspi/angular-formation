@@ -1,59 +1,79 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SimulationService} from '../../services/simulation.service';
+import {SimulationService} from '../../_services/simulation.service';
+import {ControlKey} from '../../_models/controlkey';
+import {ControlPropertiesService} from '../../_services/control-properties.service';
+import {ReferentialService} from '../../_services/referential.service';
+import {RowableComponent} from '../../_components/rowable/rowable.component';
 
 @Component({
     selector: 'app-simulator',
     templateUrl: './simulator-form.component.html',
     styleUrls: ['./simulator-form.component.scss']
 })
-export class SimulatorFormComponent implements OnInit {
+export class SimulatorFormComponent extends RowableComponent implements OnInit {
 
-    public numbers = Array(15).fill(null).map((x, i) => i + 1);
+    public numbers = Array<number>(7).fill(null).map((x, i) => i + 1);
     public simulatorForm: FormGroup;
+    public childrenInfoArrayName = ControlKey.CHILDREN;
 
-    constructor(private fb: FormBuilder, private simulationService: SimulationService, private router: Router) {
+    constructor(private referentialService: ReferentialService, private fb: FormBuilder, private simulationService: SimulationService, private router: Router, private controlPropertiesService: ControlPropertiesService) {
+        super();
     }
 
-    get city() {
-        return this.simulatorForm.get('city');
+    private get controlProperties() {
+        return this.controlPropertiesService.getControlPropertiesMap();
     }
 
-    get income() {
-        return this.simulatorForm.get('income');
+    get scholarLevelProp() {
+        return this.controlProperties.get(ControlKey.SCHOLAR_LEVEL);
     }
 
-    get nbrHandi() {
-        return this.simulatorForm.get('nbrHandi');
+    get dateOfBirthProp() {
+        return this.controlProperties.get(ControlKey.DATE_OF_BIRTH);
     }
 
-    get nbrChildren() {
-        return this.simulatorForm.get('nbrChildren');
+    get cityProp() {
+        return this.controlProperties.get(ControlKey.ADDRESS_CITY);
     }
 
-    get children() {
-        return this.simulatorForm.get('children') as FormArray;
+    get incomeProp() {
+        return this.controlProperties.get(ControlKey.INCOME);
+    }
+
+    get nbrHandiProp() {
+        return this.controlProperties.get(ControlKey.NBR_HANDI);
+    }
+
+    get nbrChildrenProp() {
+        return this.controlProperties.get(ControlKey.NBR_CHILDREN);
+    }
+
+    get rowFormArray(): FormArray {
+        return this.simulatorForm.get(ControlKey.CHILDREN) as FormArray;
+    }
+
+    get nbrRowControl(): FormControl {
+        return this.simulatorForm.get(ControlKey.NBR_CHILDREN) as FormControl;
+    }
+
+    buildRow(): FormGroup {
+        return this.fb.group({
+            [ControlKey.DATE_OF_BIRTH]: ['', Validators.required],
+            [ControlKey.SCHOLAR_LEVEL]: ['', Validators.required]
+        });
     }
 
     ngOnInit(): void {
         this.simulatorForm = this.fb.group({
-            city: ['', Validators.required],
-            income: ['', Validators.required],
-            nbrHandi: [],
-            nbrChildren: [null, Validators.required],
-            children: this.fb.array([]),
+            [ControlKey.ADDRESS_CITY]: ['', Validators.required],
+            [ControlKey.GRP_INCOME]: ['', Validators.required],
+            [ControlKey.NBR_HANDI]: [],
+            [ControlKey.NBR_CHILDREN]: [null, Validators.required],
+            [ControlKey.CHILDREN]: this.fb.array([]),
         });
-
-        this.nbrChildren.valueChanges.subscribe(val => {
-            this.children.clear();
-            for (let i = 0; i < val; i++) {
-                this.children.push(this.fb.group({
-                    dateOfBirth: ['', Validators.required],
-                    scholarLevel: ['', Validators.required]
-                }));
-            }
-        });
+        super.ngOnInit();
     }
 
     onSubmit() {

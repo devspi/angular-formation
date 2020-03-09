@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div *ngFor="let inquiry of inquiries" class="card">
+        <h5 class="card-header">Demande de bourse</h5>
+        <ng-container [ngSwitch]="inquiry.status">
+
+            <div *ngSwitchCase="'ACCEPTED'" class="card-body">
+                <h5 class="card-title text-success">Status : {{ inquiry.status }}</h5>
+                <h5 class="card-title">Date de la demande : {{ inquiry.dateOfDemand | date:'dd/MM/yyyy'}}</h5>
+                <p class="card-text">{{ inquiry.message }}</p>
+                <button type="button" href="#" class="btn btn-primary mr-2">Editer des coupons</button>
+                <button type="button" href="#" class="btn btn-primary mr-2">Voir les paiements</button>
+            </div>
+
+            <div *ngSwitchCase="'DECLINED'" class="card-body">
+                <h5 class="card-title">Status : {{ inquiry.status }}</h5>
+                <h5 class="card-title">Date de la demande : {{ inquiry.dateOfDemand | date:'dd/MM/yyyy'}}</h5>
+                <p class="card-text">{{ inquiry.message }}</p>
+
+                <a href="#" class="btn btn-primary">Editer une attestation de non bourse</a>
+            </div>
+
+            <div *ngSwitchCase="'MISSING_DOCUMENT'" class="card-body">
+                <h5 class="card-title">Status : {{ inquiry.status }}</h5>
+                <h5 class="card-title">Date de la demande : {{ inquiry.dateOfDemand | date:'dd/MM/yyyy'}}</h5>
+                <p class="card-text">{{ inquiry.message }}</p>
+                <a href="#" class="btn btn-primary">Envoyer les documents manquants</a>
+            </div>
+
+            <div *ngSwitchCase="'IN_PROGRESS'" class="card-body">
+                <h5 class="card-title">Status : {{ inquiry.status }}</h5>
+                <h5 class="card-title">Date de la demande : {{ inquiry.dateOfDemand | date:'dd/MM/yyyy'}}</h5>
+                <p class="card-text">{{ inquiry.message }}</p>
+                <a href="#" class="btn btn-primary">Nous signaler un changement</a>
+            </div>
+
+        </ng-container>
+
+    </div>
+</div>

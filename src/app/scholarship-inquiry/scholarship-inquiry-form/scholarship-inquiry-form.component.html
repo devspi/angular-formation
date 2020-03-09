@@ -1,10 +1,10 @@
 <div>
     <h2>Demande de bourse scolaire</h2>
     <button routerLink="/">Retour à l'accueil</button>
+    {{inquiryForm.value | json}}
 
-    <form [formGroup]="inquiryForm" (ngSubmit)="onSubmit()">
-        {{inquiryForm.value | json}}
-        <div formGroupName="identity">
+    <form *ngIf="activeStep === 1" [formGroup]="inquiryForm" (ngSubmit)="onSubmit()">
+        <div>
             <div class="row">
                 <div class="col-sm">
                     <h5>Demandeur</h5>
@@ -14,16 +14,43 @@
                 </div>
             </div>
 
-            <app-scholarship-inquiry-general-info [formGroupLeft]="applicant.get('generalInfo')"
-                                                  [formGroupRight]="conjoint.get('generalInfo')">
+            <app-scholarship-inquiry-general-info [parentFormLeft]="applicant"
+                                                  [parentFormRight]="conjoint">
             </app-scholarship-inquiry-general-info>
 
-            <app-family-situation [formGroupLeft]="applicant.get('familySituation')"
-                                  [formGroupRight]="conjoint.get('familySituation')">
+            <app-family-situation [parentFormLeft]="applicant"
+                                  [parentFormRight]="conjoint">
             </app-family-situation>
 
+            <app-child-link [parentFormLeft]="applicant"
+                            [parentFormRight]="conjoint">
+            </app-child-link>
 
+            <app-professional-situation [parentFormLeft]="applicant"
+                                        [parentFormRight]="conjoint">
+            </app-professional-situation>
+            <app-scholarship-inquiry-income [parentFormLeft]="applicant"
+                                            [parentFormRight]="conjoint">
+            </app-scholarship-inquiry-income>
+
+            <app-socialsecurity [parentFormLeft]="applicant"
+                                [parentFormRight]="conjoint">
+            </app-socialsecurity>
+
+            <hr/>
+            <app-children-info [parentForm]="inquiryForm"></app-children-info>
         </div>
-        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <button class="btn btn-primary" type="button"
+                (click)="goToStep(2)">
+            Joindre les documents
+        </button>
     </form>
+    <div *ngIf="activeStep === 2">
+        <app-justificative-attachments [inquiryForm]="inquiryForm"></app-justificative-attachments>
+        <button class="btn btn-primary" type="button"
+                (click)="goToStep(1)">
+            Revenir au formulaire
+        </button>
+    </div>
+
 </div>
